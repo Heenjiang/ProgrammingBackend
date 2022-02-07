@@ -1,9 +1,0 @@
-in domian model(IDM) for java iterator
-
-1. Functional units
-   
-2. Parameters
-
-3. Return types and return values
-
-4. Exceptional behavior

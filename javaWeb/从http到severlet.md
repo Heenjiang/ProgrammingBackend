@@ -173,7 +173,9 @@ public class HelloServlet extends HttpServlet {
 
 一个Servlet总是继承自`HttpServlet`，然后覆写`doGet()`或`doPost()`方法。注意到`doGet()`方法传入了`HttpServletRequest`和`HttpServletResponse`两个对象，分别代表HTTP请求和响应。我们使用Servlet API时，并不直接与底层TCP交互，也不需要解析HTTP协议，因为`HttpServletRequest`和`HttpServletResponse`就已经封装好了请求和响应。以发送响应为例，我们只需要设置正确的响应类型，然后获取`PrintWriter`，写入响应即可。
 
-现在问题来了：Servlet API是谁提供？
+**现在问题来了：**
+
+## **Servlet API是谁提供？**
 
 Servlet API是一个jar包，我们需要通过Maven来引入它，才能正常编译。
 
@@ -220,11 +222,13 @@ web-servlet-hello
 
 运行Maven命令`mvn clean package`，在`target`目录下得到一个`hello.war`文件，这个文件就是我们编译打包后的Web应用程序。
 
-现在问题又来了：我们应该如何运行这个`war`文件？
+现在问题又来了：
+
+## 我们应该如何运行这个`war`文件？
 
 普通的Java程序是通过启动JVM，然后执行`main()`方法开始运行。但是Web应用程序有所不同，我们无法直接运行`war`文件，必须先启动Web服务器，再由Web服务器加载我们编写的`HelloServlet`，这样就可以让`HelloServlet`处理浏览器发送的请求。
 
-实际上，类似Tomcat这样的服务器也是Java编写的，启动Tomcat服务器实际上是启动Java虚拟机，执行Tomcat的`main()`方法，然后由Tomcat负责加载我们的`.war`文件，并创建一个`HelloServlet`实例，最后以多线程的模式来处理HTTP请求。如果Tomcat服务器收到的请求路径是`/`（假定部署文件为ROOT.war），就转发到`HelloServlet`并传入`HttpServletRequest`和`HttpServletResponse`两个对象。
+实际上，类似Tomcat这样的服务器也是Java编写的，**启动Tomcat服务器实际上是启动Java虚拟机**，执行Tomcat的`main()`方法，然后由Tomcat负责加载我们的`.war`文件，并**创建一个`HelloServlet`实例**，最后以多线程的模式来处理HTTP请求。如果Tomcat服务器收到的请求路径是`/`（假定部署文件为ROOT.war），就转发到`HelloServlet`并传入`HttpServletRequest`和`HttpServletResponse`两个对象。
 
 因为我们编写的Servlet并不是直接运行，而是由Web服务器加载后创建实例运行，所以，**类似Tomcat这样的Web服务器也称为Servlet容器。**
 
